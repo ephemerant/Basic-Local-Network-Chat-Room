@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace Chat_Room
 {
@@ -130,21 +131,18 @@ namespace Chat_Room
 
         public Message(string data)
         {
-            if (data.Contains("|"))
-            {
-                var values = data.Split('|');
+            Console.WriteLine(data);
 
-                Time = values[0];
-                Name = values[1];
-                Text = values[2];
-            }
-            else
-                Text = data;
+            var message = JsonConvert.DeserializeObject<Message>(data);            
+
+            Time = message.Time;
+            Name = message.Name;
+            Text = message.Text;
         }
 
         public override string ToString()
         {
-            return string.Format("{0}|{1}|{2}", Time, Name, Text);
+            return JsonConvert.SerializeObject(this);            
         }
     }
 }
