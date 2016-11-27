@@ -130,11 +130,16 @@ namespace Chat_Room
 
         public Message(string data)
         {
-            var values = data.Split('|');
+            if (data.Contains("|"))
+            {
+                var values = data.Split('|');
 
-            Time = values[0];
-            Name = values[1];
-            Text = values[2];
+                Time = values[0];
+                Name = values[1];
+                Text = values[2];
+            }
+            else
+                Text = data;
         }
 
         public override string ToString()
